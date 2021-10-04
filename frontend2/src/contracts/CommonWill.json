@@ -15991,123 +15991,14 @@
   },
   "networks": {
     "5777": {
-      "events": {
-        "0x5e91ea8ea1c46300eb761859be01d7b16d44389ef91e03a163a87413cbf55b95": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "from",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "amount",
-              "type": "uint256"
-            }
-          ],
-          "name": "Pledge",
-          "type": "event"
-        },
-        "0xe5b754fb1abb7f01b499791d0b820ae3b6af3424ac1c59768edb53f4ec31a929": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "redeemer",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "executorTokensAmount",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "gain",
-              "type": "uint256"
-            }
-          ],
-          "name": "Redeem",
-          "type": "event"
-        },
-        "0xa573ab9d2e3543063328d76b80796e5c0940edfc89ac8074f2fc7833a9cf8292": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "winner",
-              "type": "address"
-            }
-          ],
-          "name": "Success",
-          "type": "event"
-        },
-        "0xfb204ccae9191edd3ad64036285097b68f2bf17c9bd075ea3ef08c23aef587a9": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "time",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "totalPledge",
-              "type": "uint256"
-            }
-          ],
-          "name": "TimeOutMinPledge",
-          "type": "event"
-        },
-        "0xa43fd39edb3566d8f64b3609b0372928f063310e2d5bbab78a51a50bf43613c1": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "time",
-              "type": "uint256"
-            }
-          ],
-          "name": "TimeOutProcess",
-          "type": "event"
-        },
-        "0x2ffae5a0cb93da25fd812ec1a59b4c729c6f1dfd0cacd576d216ce5ff7e2da41": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "supporter",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "amount",
-              "type": "uint256"
-            }
-          ],
-          "name": "WithrawPledge",
-          "type": "event"
-        }
-      },
+      "events": {},
       "links": {},
       "address": "0x95E574C9a1bF7dd2a2FC31bf08c888CdB6C86cc6",
       "transactionHash": "0xc84eee2b5bc6e60b71a711a0b1c4529f2a07764d0163202b5a0b665f4c662b74"
     }
   },
   "schemaVersion": "3.4.2",
-  "updatedAt": "2021-10-04T14:03:05.554Z",
+  "updatedAt": "2021-09-26T06:57:30.319Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

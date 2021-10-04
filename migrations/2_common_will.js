@@ -23,10 +23,9 @@ module.exports = async function(deployer, network, accounts) {
 
     const SECONDS_IN_DAY = 86400;
     const conditionDataId = "0x0000000000000000000000000000000000000000000000000000000000000123";
-    const minPledge = 15000;
+    const minPledge = '15000000000000000000000';
     const minPledgeTimeDuration = 10 * SECONDS_IN_DAY;
     const processTimeDuration = 100 * SECONDS_IN_DAY;
-    const PLEDGE_TOKENS_AMOUNT = 1000000;
 
     // check current time and calc process schedule
     let blockNum = await web3.eth.getBlockNumber();
@@ -41,4 +40,11 @@ module.exports = async function(deployer, network, accounts) {
       minPledge, minPledgeDueTime, pledgeToken.address);
     const cwAddress = await createCwResult.logs[0].args.newCommonWill;
     console.log('🚀 ~ Common Will Proxy Contract Address', cwAddress);
+
+    let proxyContract = await CommonWill.at(cwAddress);
+    await pledgeToken.approve(cwAddress, '10000000000000000000'); 
+    await proxyContract.pledge('10000000000000000000', {from: accounts[0]});
+    console.log('🚀 ~ Pledged!');
+    let totalPledge = await proxyContract.totalPledge();
+    console.log('🚀 ~ Totala pledge:', totalPledge.toString());
 }
