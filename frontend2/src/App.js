@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import getProvider from './components/Provider.js';
+import PledgeForm from './components/PledgeForm.js';
 import { ethers, Contract, BigNumber } from 'ethers';
 import './App.css';
 import 'bn.js';
@@ -99,6 +100,19 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const listenEvents = async () => {
+      proxy.on("Pledge", (from, amount, event) => {
+        getMyPledge();
+        getTotalPledge();
+        console.log("Pledged!", amount);
+      });
+    };
+    if (typeof signer != 'undefined' && typeof proxy != 'undefined'){
+      listenEvents();
+    }
+  }, [proxy]);
+
+  useEffect(() => {
     if(
       typeof signer != 'undefined' && typeof proxy != 'undefined'
     ) {
@@ -110,6 +124,8 @@ function App() {
     }
   });
 
+
+
   return (
     (typeof signer === 'undefined' || typeof proxy === 'undefined') ? 'Loading...' : (
     <Container fluid>
@@ -117,13 +133,17 @@ function App() {
         <h1 className="header">Welcome!</h1> 
       </Row>
       <Row>
-        <div className="mt-2">Contract Address: {proxy.address}</div>
-        <div className="mt-2">Current total pledge: {totalPledge}</div>
-        <div className="mt-2">Min pledge: {minPledge}</div>
-        <div className="mt-2">Min pledge due time: {minPledgeTime}</div>
-        <div className="mt-2">Judge Address: {judge}</div>
-        <div className="mt-2">My pledge: {pledgeAmount}</div>
+        <div className="mb-2">Contract Address: {proxy.address}</div>
+        <div className="mb-2">Current total pledge: {totalPledge}</div>
+        <div className="mb-2">Min pledge: {minPledge}</div>
+        <div className="mb-2">Min pledge due time: {minPledgeTime}</div>
+        <div className="mb-2">Judge Address: {judge}</div>
+        <div className="mb-4">My pledge: {pledgeAmount}</div>
       </Row>
+      <Row>
+        <PledgeForm signer={signer} proxy={proxy} pledgeToken={pledgeToken}/>
+      </Row>
+      
     </Container>
   ));
 }
