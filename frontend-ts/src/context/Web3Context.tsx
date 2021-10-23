@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext, useReducer } from "react";
 import ethers from "ethers";
-import { useContext, useReducer } from "react";
 
 interface IStateWeb3{
     signer: ethers.providers.JsonRpcSigner | null;
@@ -67,44 +66,3 @@ export const Web3Provider: React.FC<ProviderProps> = ({ children }) => {
   );
 };
 
-
-  //
-  //export function Updater() {
-  //  const { state, updateNetId } = useWeb3Context();
-  //
-  //  useEffect(() => {
-  //    if (state.web3) {
-  //      const unsubscribe = subscribeToAccount(state.web3, (error, account) => {
-  //        if (error) {
-  //          console.error(error);
-  //        }
-  //        if (account !== undefined && account !== state.account) {
-  //          window.location.reload();
-  //        }
-  //      });
-  //
-  //      return unsubscribe;
-  //    }
-  //  }, [state.web3, state.account]);
-  //
-  //  useEffect(() => {
-  //    if (state.web3) {
-  //      const unsubscribe = subscribeToNetId(state.web3, (error, netId) => {
-  //        if (error) {
-  //          console.error(error);
-  //        }
-  //        if (netId) {
-  //          if (state.netId === 0) {
-  //            updateNetId({ netId });
-  //          } else if (netId !== state.netId) {
-  //            window.location.reload();
-  //          }
-  //        }
-  //      });
-  //
-  //      return unsubscribe;
-  //    }
-  //  }, [state.web3, state.netId, updateNetId]);
-  //
-  //  return null;
-  //}

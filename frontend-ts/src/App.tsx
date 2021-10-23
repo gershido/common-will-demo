@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import {useWeb3Context} from './context/Web3Context';
-import {getWeb3 , onAccountChange} from './api/web3';
+import ConnectButton from './components/ConnectButton';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,29 +13,20 @@ function App() {
   const updateAccount = web3Context.updateAccount;
 
 
-
-  const onClickConnect = async () => {
-    let data = await getWeb3();
-
-    if (data){
-      updateAccount(data);
-      onAccountChange(signer, updateAccount);
-    }
-  }
-
   return (
     <div>
       <Container>
-      <h1 className="CenterText"> 
-        Common Will Demo
-      </h1>
-      <button onClick={onClickConnect}>
-        Connect
-      </button>
-      <div>
-        account: {account}
-      </div>
-    </Container>
+        <Row className="mt-2 mb-2">
+          <ConnectButton/>
+        </Row>
+        <Row> 
+          <h1> 
+            Common Will Demo
+          </h1>
+        </Row>
+      </Container>
+        
+        
     </div>
      
   );
