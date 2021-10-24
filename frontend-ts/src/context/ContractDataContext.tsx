@@ -1,37 +1,38 @@
 import React, {useContext, useReducer} from "react";
+import {BigNumber} from 'ethers';
 
 interface IContractData{
-    totalPledge: number;
-    myPledge: number;
-    judge: string;
-    minimalPledge: number;
-    minimalPledgeTime: number;
-    totalTime: number;
-    winner: string;
+    totalPledge: BigNumber | undefined;
+    myPledge: BigNumber | undefined;
+    judge: string | undefined;
+    minimalPledge: BigNumber | undefined;
+    minimalPledgeTime: string | undefined;
+    totalTime: string | undefined;
+    winner: string | undefined;
 }
 
 const INITIAL_STATE_DATA : IContractData= {
-    totalPledge: 0,
-    myPledge: 0,
+    totalPledge: BigNumber.from(0),
+    myPledge: BigNumber.from(0),
     judge: '',
-    minimalPledge: 0,
-    minimalPledgeTime: 0,
-    totalTime: 0,
+    minimalPledge: BigNumber.from(0),
+    minimalPledgeTime: '',
+    totalTime: '',
     winner: '',
 }
 
 const ContractDataContext = React.createContext({
     state: INITIAL_STATE_DATA,
-    updateTotalPledge: (totalPledge: number) => {},
-    updateMyPledge: (myPledge: number, totalPledge: number) => {},
+    updateTotalPledge: (totalPledge: BigNumber | undefined) => {},
+    updateMyPledge: (myPledge: BigNumber | undefined, totalPledge: BigNumber | undefined) => {},
     updateAll: (
-        totalPledge: number,
-        myPledge: number,
-        judge: string,
-        minimalPledge: number,
-        minimalPledgeTime: number,
-        totalTime: number,
-        winner: string,
+        totalPledge: BigNumber | undefined,
+        myPledge: BigNumber | undefined,
+        judge: string | undefined,
+        minimalPledge: BigNumber | undefined,
+        minimalPledgeTime: string | undefined,
+        totalTime: string | undefined,
+        winner: string | undefined,
     ) => {},
 });
 
@@ -41,24 +42,24 @@ export function useContractDataContext(){
 
 interface IUpdateTotalPledge{
     type: 'UPDATE_TOTAL_PLEDGE';
-    totalPledge: number;
+    totalPledge: BigNumber | undefined;
 }
 
 interface IUpdateMyPledge{
     type: 'UPDATE_MY_PLEDGE';
-    totalPledge: number;
-    myPledge: number;
+    totalPledge: BigNumber | undefined;
+    myPledge: BigNumber | undefined;
 }
 
 interface IUpdateAll{
     type: 'UPDATE_ALL',
-    totalPledge: number;
-    myPledge: number;
-    judge: string;
-    minimalPledge: number;
-    minimalPledgeTime: number;
-    totalTime: number;
-    winner: string;
+    totalPledge: BigNumber | undefined;
+    myPledge: BigNumber | undefined;
+    judge: string | undefined;
+    minimalPledge: BigNumber | undefined;
+    minimalPledgeTime: string | undefined;
+    totalTime: string | undefined;
+    winner: string | undefined;
 }
 
 type Action = IUpdateTotalPledge | IUpdateMyPledge | IUpdateAll;
@@ -101,14 +102,14 @@ interface ProviderProps {}
 export const ContractDataProvider: React.FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE_DATA);
 
-  function updateTotalPledge(totalPledge: number) {
+  function updateTotalPledge(totalPledge: BigNumber | undefined) {
     dispatch({
       type: "UPDATE_TOTAL_PLEDGE",
       totalPledge: totalPledge,
     });
   }
 
-  function updateMyPledge(myPledge: number, totalPledge: number) {
+  function updateMyPledge(myPledge: BigNumber | undefined, totalPledge: BigNumber | undefined) {
     dispatch({
       type: "UPDATE_MY_PLEDGE",
       totalPledge: totalPledge,
@@ -117,13 +118,13 @@ export const ContractDataProvider: React.FC<ProviderProps> = ({ children }) => {
   }
 
   function updateAll(
-    totalPledge: number,
-    myPledge: number,
-    judge: string,
-    minimalPledge: number,
-    minimalPledgeTime: number,
-    totalTime: number,
-    winner: string,
+    totalPledge: BigNumber | undefined,
+    myPledge: BigNumber | undefined,
+    judge: string | undefined,
+    minimalPledge: BigNumber | undefined,
+    minimalPledgeTime: string | undefined,
+    totalTime: string | undefined,
+    winner: string | undefined,
   ) {
     dispatch({
       type: "UPDATE_ALL",

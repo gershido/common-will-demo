@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import {useWeb3Context} from './context/Web3Context';
 import ConnectButton from './components/ConnectButton';
+import { ContractDetails } from './components/ContractData';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -20,9 +21,7 @@ function App() {
           <ConnectButton/>
         </Row>
         <Row> 
-          <h1> 
-            Common Will Demo
-          </h1>
+          {signer ? <ContractDetails/> : null}
         </Row>
       </Container>
         

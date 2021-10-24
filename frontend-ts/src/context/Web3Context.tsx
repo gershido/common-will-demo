@@ -2,18 +2,18 @@ import React, { useContext, useReducer } from "react";
 import ethers from "ethers";
 
 interface IStateWeb3{
-    signer: ethers.providers.JsonRpcSigner | null;
+    signer: ethers.providers.JsonRpcSigner | undefined;
     account: string;
 }
 
 const INITIAL_STATE_WEB3 : IStateWeb3 = {
-    signer: null,
+    signer: undefined,
     account: '',
 }
 
 const Web3Context = React.createContext({
     state: INITIAL_STATE_WEB3,
-    updateAccount: (_data: { account: string; signer?: ethers.providers.JsonRpcSigner |null }) => {},
+    updateAccount: (_data: { account: string; signer?: ethers.providers.JsonRpcSigner |undefined }) => {},
 });
 
 export function useWeb3Context(){
@@ -23,7 +23,7 @@ export function useWeb3Context(){
 interface IUpdateAccount{
     type: "UPDATE_ACCOUNT",
     account: string,
-    signer?: ethers.providers.JsonRpcSigner | null,
+    signer?: ethers.providers.JsonRpcSigner | undefined,
 }
 
 type Action = IUpdateAccount;
@@ -50,7 +50,7 @@ interface ProviderProps {}
 export const Web3Provider: React.FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE_WEB3);
 
-  function updateAccount(data: { account: string; signer?: ethers.providers.JsonRpcSigner | null }) {
+  function updateAccount(data: { account: string; signer?: ethers.providers.JsonRpcSigner | undefined }) {
     dispatch({
       type: "UPDATE_ACCOUNT",
       ...data,

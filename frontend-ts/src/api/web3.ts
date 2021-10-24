@@ -32,11 +32,11 @@ export async function getWeb3(){
 
 
 export async function onAccountChange(
-    signer: ethers.providers.JsonRpcSigner | null,
-    callback: (data: { account: string; signer?: ethers.providers.JsonRpcSigner | null }) => any){
+    signer: ethers.providers.JsonRpcSigner | undefined,
+    callback: (data: { account: string; signer?: ethers.providers.JsonRpcSigner | undefined }) => any){
         // @ts-ignore
         window.ethereum.on('accountsChanged', function (accounts){
-            const newData : {account: string; signer: ethers.providers.JsonRpcSigner | null} = {account: accounts[0], signer};
+            const newData : {account: string; signer: ethers.providers.JsonRpcSigner | undefined} = {account: accounts[0], signer};
             callback(newData);
         });
     }
