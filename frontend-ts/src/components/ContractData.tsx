@@ -52,7 +52,6 @@ export function ContractDetails(){
             let MinPledgeTimeInit = await getMinPledgeTime(proxy);
             let judgeInit = await getJudge(proxy);
             let totalTimeInit = await getTotalTime(proxy);
-            let contractAddressInit = await getContractAddress();
 
             updateAll(
                 totalPledgeInit,
@@ -64,9 +63,27 @@ export function ContractDetails(){
                 winner,
             );
         }
+
         initDetails();
     }, [signer, account]);
 
+    useEffect(() => {
+        const listenEvents = () => {
+            proxy.on("Pledge", async (from, amount, event) => {
+              if (from == account){
+                let myPledgeCurrent = await getMyPledge(proxy, account);
+                let totalPledgeCurrent = await getTotalPledge(proxy);
+                updateMyPledge(myPledgeCurrent, totalPledgeCurrent);
+              }
+              else{
+                let totalPledgeCurrent = await getTotalPledge(proxy);
+                updateTotalPledge(totalPledgeCurrent);
+              } 
+              console.log("Pledged!", amount.toString(), from);
+            });
+        };
+        listenEvents();
+    }, [signer]);
 
     return (
         <div>
@@ -91,7 +108,7 @@ export function ContractDetails(){
             <div className="mb-1">
                 Due Time for minimal Pledge: {minimalPledgeTime ? minimalPledgeTime : ''}
             </div>
-            <div className="mb-1">
+            <div className="mb-4">
                 Due time total process: {totalTime ? totalTime : ''}
             </div>
         </div>
