@@ -15,6 +15,7 @@ export default function ConnectButton(){
     const onClickConnect = async () => {
         setState("Connecting...")
         let data = await getWeb3();
+        console.log(data?.ethersAdapter);
 
         if (data){
           updateAccount(data);

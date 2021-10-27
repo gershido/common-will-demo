@@ -8,3 +8,17 @@ export async function deployNewSafe(ethersAdapter : EthersAdapter, owners: strin
     return safeSdk;
 }
 
+export async function connectExistingSafe(ethersAdapter : EthersAdapter, safeAddress: string){
+    const safeSdk: Safe = await Safe.create({ ethAdapter: ethersAdapter, safeAddress });
+    
+    return safeSdk;
+}
+
+export async function getSafeDetails(safeSdk: Safe){
+    const owners = await safeSdk.getOwners();
+    const threshold = await safeSdk.getThreshold();
+    const address = await safeSdk.getAddress();
+    const balance = await safeSdk.getBalance();
+
+    return {address, owners, threshold, balance};
+}

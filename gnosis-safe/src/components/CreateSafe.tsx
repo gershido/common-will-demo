@@ -3,6 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ethers, { BigNumber, Contract } from 'ethers';
 import { useWeb3Context } from '../context/Web3Context';
+import {deployNewSafe} from '../api/Safe';
+import { EthersAdapter } from '@gnosis.pm/safe-core-sdk';
+import {useSafeContext} from '../context/SafeContext';
 
 const OwnerInput: React.FC<{num: number}> = (num) => {
     return(
@@ -10,7 +13,7 @@ const OwnerInput: React.FC<{num: number}> = (num) => {
             <Form.Label>
                 Owner number {num}:
             </Form.Label>
-            <Form.Control type="number"></Form.Control>
+            <Form.Control as="textarea"></Form.Control>
         </Form.Group>
     );
 }
@@ -18,17 +21,32 @@ const OwnerInput: React.FC<{num: number}> = (num) => {
 export function CreateSafe(){
     const [numOwners, setNumOwners] = useState(0);
     const [formValue, setFormValue] = useState('');
+    const [disabled, setDisabled] = useState(false);
 
     const web3Context = useWeb3Context();
     const signer = web3Context.state.signer as ethers.providers.JsonRpcSigner;
     const account = web3Context.state.account;
+    const ethersAdapter = web3Context.state.ethersAdapter as EthersAdapter;;
+
+    const safeContext = useSafeContext();
+    const updateSafe = safeContext.updateSafe; 
 
     const handleSubmit = async (e : any) => {
         e.preventDefault();
-        console.log(e.target.elements[1].value);
-        console.log(e.target.elements[2].value);
+        setDisabled(true);
+        console.log(numOwners);
+
+        let owners: string[] = new Array();
+        let startIndex: number = 2;
+        let endIndex: number = startIndex + +numOwners;
+
+        for (let i = 2; i < endIndex; i++){
+            owners.push(e.target.elements[i].value);
+        }
+
+        let newSafe = await deployNewSafe(ethersAdapter, owners, numOwners);
+        updateSafe(newSafe);
         
-        setFormValue('');
     }
 
 
@@ -51,7 +69,7 @@ export function CreateSafe(){
                 <Form.Label>
                     Owner number {val}:
                 </Form.Label>
-                <Form.Control type="number"></Form.Control>
+                <Form.Control type="text"></Form.Control>
             </Form.Group>
         </div>
     );
@@ -59,16 +77,19 @@ export function CreateSafe(){
     return(
         <>
             <Form onSubmit={e => {handleSubmit(e)}}>
-                <Form.Group className="mb-3">
-                    <Form.Label>
-                        Number of owners:
-                    </Form.Label>
-                    <Form.Control type="number" onChange={e => {handleChangeOwners(e)}} value={formValue}></Form.Control>
-                </Form.Group>
-                {ownerInputs}
-                <Button variant="primary" type="submit"> 
-                    Create
-                </Button>
+                <fieldset disabled={disabled}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>
+                            Number of owners:
+                        </Form.Label>
+                        <Form.Control type="number" onChange={e => {handleChangeOwners(e)}} value={formValue}></Form.Control>
+                    </Form.Group>
+                    {ownerInputs}
+                    <Button variant="primary" type="submit"> 
+                        Create
+                    </Button>
+                </fieldset>
+                
             </Form>
         </>
     );
