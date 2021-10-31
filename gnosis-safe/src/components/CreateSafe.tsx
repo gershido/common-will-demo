@@ -7,16 +7,6 @@ import {deployNewSafe} from '../api/Safe';
 import { EthersAdapter } from '@gnosis.pm/safe-core-sdk';
 import {useSafeContext} from '../context/SafeContext';
 
-const OwnerInput: React.FC<{num: number}> = (num) => {
-    return(
-        <Form.Group className="mb-3">
-            <Form.Label>
-                Owner number {num}:
-            </Form.Label>
-            <Form.Control as="textarea"></Form.Control>
-        </Form.Group>
-    );
-}
 
 export function CreateSafe(){
     const [numOwners, setNumOwners] = useState(0);
@@ -34,7 +24,6 @@ export function CreateSafe(){
     const handleSubmit = async (e : any) => {
         e.preventDefault();
         setDisabled(true);
-        console.log(numOwners);
 
         let owners: string[] = new Array();
         let startIndex: number = 2;
@@ -43,8 +32,9 @@ export function CreateSafe(){
         for (let i = 2; i < endIndex; i++){
             owners.push(e.target.elements[i].value);
         }
+        let threshold = e.target.elements[endIndex].value;
 
-        let newSafe = await deployNewSafe(ethersAdapter, owners, numOwners);
+        let newSafe = await deployNewSafe(ethersAdapter, owners, threshold);
         updateSafe(newSafe);
         
     }
@@ -85,6 +75,12 @@ export function CreateSafe(){
                         <Form.Control type="number" onChange={e => {handleChangeOwners(e)}} value={formValue}></Form.Control>
                     </Form.Group>
                     {ownerInputs}
+                    <Form.Group className="mb-3">
+                        <Form.Label>
+                            Threshold:
+                        </Form.Label>
+                        <Form.Control type="number"></Form.Control>
+                    </Form.Group>
                     <Button variant="primary" type="submit"> 
                         Create
                     </Button>

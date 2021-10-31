@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useSafeContext} from "../context/SafeContext";
+import { useWeb3Context } from "../context/Web3Context";
 import { getSafeDetails } from "../api/Safe";
 import Safe from "@gnosis.pm/safe-core-sdk";
 
@@ -8,10 +9,19 @@ export function ContractDetails(){
     const [owners, setOwners] = useState(['']);
     const [threshold, setThreshold] = useState(0);
     const [balance, setBalance] = useState('');
+    const [connectedAccount, setConnectedAccount] = useState('');
 
     let safeContext = useSafeContext();
     let safeSdk = safeContext.state.safe as Safe;
 
+    let web3Context = useWeb3Context();
+    let account = web3Context.state.account;
+    let signer = web3Context.state.signer;
+
+    useEffect(() => {
+        setConnectedAccount(account);
+    }, [account]);
+    
     useEffect(() => {
         const get = async () => {
             let safeDetails = await getSafeDetails(safeSdk);
@@ -23,13 +33,23 @@ export function ContractDetails(){
         get();
     }, [safeSdk]);
 
-    console.log(owners);
-
-    let OwnersList = owners.map((val) =>
-        <li key={val.toString()}>
-            {val}
-        </li>
-    );
+    const highlight = {
+        backgroundColor: '#FFFF00',
+    }
+    
+    let OwnersList = owners.map((val) => {
+        return(
+            (connectedAccount.toLocaleLowerCase() == val.toLocaleLowerCase()) ?
+            <li key={val.toString()} style={highlight}>
+                {val}
+            </li>
+            :
+            <li key={val.toString()}>
+                {val}
+            </li>
+        )
+    });
+    
 
     return(
         <div>

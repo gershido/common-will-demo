@@ -14,7 +14,7 @@ const INITIAL_STATE_WEB3 : IStateWeb3 = {
     account: '',
 }
 
-const Web3Context = React.createContext({
+export const Web3Context = React.createContext({
     state: INITIAL_STATE_WEB3,
     updateAccount: (_data: { account: string; ethersAdapter?: EthersAdapter | undefined; signer?: ethers.providers.JsonRpcSigner |undefined }) => {},
 });
