@@ -7,6 +7,7 @@ import {CreateSafe} from './components/CreateSafe';
 import { ExistingSafe } from './components/ExistingSafe';
 import { InitSafe } from './components/InitSafe';
 import { ContractDetails } from './components/SafeDetails';
+import { Transactions } from './components/Transactions';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -28,8 +29,11 @@ function App() {
         <Row className="mb-4">
           {signer ? <InitSafe/> : null}
         </Row>
-        <Row>
+        <Row className="mb-4">
           {safeContext.state.safe ? <ContractDetails/> : null}
+        </Row>
+        <Row>
+          {safeContext.state.safe ? <Transactions/> : null}
         </Row>
       </Container>
     </div>

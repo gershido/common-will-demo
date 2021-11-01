@@ -28,7 +28,7 @@ export function ContractDetails(){
             setSafeAddress(safeDetails.address);
             setOwners(safeDetails.owners);
             setThreshold(safeDetails.threshold);
-            setBalance(safeDetails.balance.toString());
+            setBalance(safeDetails.balanceEtherFormatted);
         }
         get();
     }, [safeSdk]);
